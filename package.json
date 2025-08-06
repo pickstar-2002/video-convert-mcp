@@ -37,7 +37,6 @@
     "mime-types": "^2.1.35"
   },
   "devDependencies": {
-    "@types/ffmpeg-installer": "^1.0.0",
     "@types/fluent-ffmpeg": "^2.1.27",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^29.5.8",

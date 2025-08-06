@@ -13,6 +13,7 @@
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { path as ffmpegPath } from '@ffmpeg-installer/ffmpeg';
 import {
   CallToolRequestSchema,
   ErrorCode,
@@ -156,8 +157,8 @@ async function main(): Promise<void> {
  */
 async function checkFFmpegAvailability(): Promise<void> {
   return new Promise((resolve, reject) => {
-    const ffmpeg = spawn('ffmpeg', ['-version'], { 
-      stdio: ['ignore', 'pipe', 'pipe'] 
+    const ffmpeg = spawn(ffmpegPath, ['-version'], {
+      stdio: ['ignore', 'pipe', 'pipe'],
     });
 
     let output = '';

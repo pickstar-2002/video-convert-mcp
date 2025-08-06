@@ -1,4 +1,5 @@
 import ffmpeg from 'fluent-ffmpeg';
+import { path as ffmpegPath } from '@ffmpeg-installer/ffmpeg';
 import { promises as fs, statSync } from 'fs';
 import path from 'path';
 import { VideoInfo, ConversionOptions, ConversionProgress, QualityPreset } from '../types/index.js';
@@ -10,7 +11,10 @@ export class FFmpegService {
   private static instance: FFmpegService;
   private activeConversions = new Map<string, ConversionProgress>();
 
-  private constructor() {}
+  private constructor() {
+    // 设置ffmpeg可执行文件的路径，确保使用项目内的版本
+    ffmpeg.setFfmpegPath(ffmpegPath);
+  }
 
   public static getInstance(): FFmpegService {
     if (!FFmpegService.instance) {

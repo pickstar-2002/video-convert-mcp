@@ -45,9 +45,7 @@
     "tsx": "^4.20.3",
     "typescript": "^5.9.2"
   },
-  "bin": {
-    "video-convert-mcp": "./dist/index.js"
-  },
+  "bin": "./dist/index.js",
   "preferGlobal": true,
   "engines": {
     "node": ">=16.0.0"

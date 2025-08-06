@@ -21,6 +21,8 @@ import {
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
 import { spawn } from 'child_process';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 import { tools, toolHandlers } from './tools/index.js';
 import { ValidatorService } from './services/validator.js';
@@ -206,7 +208,11 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 // 启动服务器
-if (import.meta.url === `file://${process.argv[1]}`) {
+// 使用 fileURLToPath 将 import.meta.url 转换为平台相关的路径，
+// 并与 process.argv[1] (当前执行的脚本路径) 进行比较。
+// 这是判断模块是否被直接执行的最可靠、跨平台的方法。
+const __filename = fileURLToPath(import.meta.url);
+if (__filename === path.resolve(process.argv[1])) {
   main().catch((error) => {
     console.error('启动失败:', error);
     process.exit(1);

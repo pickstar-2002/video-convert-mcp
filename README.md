@@ -1,329 +1,110 @@
 # 🎬 Video Convert MCP
 
-[![npm version](https://badge.fury.io/js/@pickstar-2002%2Fvideo-convert-mcp.svg)](https://badge.fury.io/js/@pickstar-2002%2Fvideo-convert-mcp)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/node/v/@pickstar-2002/video-convert-mcp.svg)](https://nodejs.org)
-[![Downloads](https://img.shields.io/npm/dm/@pickstar-2002/video-convert-mcp.svg)](https://www.npmjs.com/package/@pickstar-2002/video-convert-mcp)
+[![NPM Version](https://img.shields.io/npm/v/@pickstar-2002/video-convert-mcp)](https://www.npmjs.com/package/@pickstar-2002/video-convert-mcp)
+[![License](https://img.shields.io/npm/l/@pickstar-2002/video-convert-mcp)](https://github.com/pickstar/video-convert-mcp/blob/main/LICENSE)
+[![Node.js](https://img.shields.io/badge/node.js-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 
-> 🚀 基于MCP协议的高性能视频格式转换工具，支持多种主流视频格式之间的无缝转换
+一款基于 AI MCP (Model Context Protocol) 协议的强大、高效的视频格式转换工具。
 
-## ✨ 特性
+## ✨ 功能特性
 
-- 🎯 **多格式支持** - 支持MP4、AVI、MOV、WMV、MKV、WEBM、M4V等主流视频格式
-- ⚡ **高性能转换** - 基于FFmpeg引擎，转换速度快，质量可靠
-- 🔧 **灵活配置** - 支持自定义分辨率、码率、帧率等参数
-- 📦 **批量处理** - 支持批量视频转换，提高工作效率
-- 🛡️ **类型安全** - 完整的TypeScript类型定义
-- 🔌 **MCP协议** - 基于Model Context Protocol，易于集成到AI应用中
+- **🚀 多格式转换**: 支持 `MP4`, `AVI`, `MOV`, `MKV`, `WEBM` 等多种主流视频格式之间的自由转换。
+- **⚙️ 批量处理**: 一次性处理多个视频文件，大幅提升工作效率。
+- **📊 质量控制**: 提供从 `low` 到 `ultra` 的多档质量预设，在文件大小和画质之间找到完美平衡。
+- **🔧 详细信息**: 轻松获取视频的详细元数据，如格式、分辨率、时长、码率等。
+- **🔒 类型安全**: 使用 TypeScript 开发，提供完整的类型定义，确保调用安全。
+- **📦 零依赖**: 内置 FFmpeg，用户无需在本地安装任何额外依赖，开箱即用。
 
-## 📋 系统要求
+## 🛠️ 安装与用法
 
-- Node.js >= 16.0.0
-- FFmpeg (需要安装并添加到系统PATH)
+本工具是一个 MCP 服务，无需全局安装。您只需在支持 MCP 的 AI 编程助手（如 CodeBuddy）中进行配置即可使用。
 
-### FFmpeg 安装指南
-
-**Windows:**
-```bash
-# 使用 Chocolatey
-choco install ffmpeg
-
-# 或下载预编译版本
-# https://ffmpeg.org/download.html#build-windows
-```
-
-**macOS:**
-```bash
-# 使用 Homebrew
-brew install ffmpeg
-```
-
-**Linux (Ubuntu/Debian):**
-```bash
-sudo apt update
-sudo apt install ffmpeg
-```
-
-## 🚀 安装
-
-### 全局安装
-```bash
-npm install -g @pickstar-2002/video-convert-mcp
-```
-
-### 项目依赖
-```bash
-npm install @pickstar-2002/video-convert-mcp
-```
-
-## 🛠️ 使用方式
-
-### 1. 命令行启动
-```bash
-# 全局安装后直接启动
-video-convert-mcp
-
-# 或使用 npx
-npx @pickstar-2002/video-convert-mcp
-```
-
-### 2. 在 Claude Desktop 中使用
-
-在 Claude Desktop 的配置文件中添加：
-
-**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
-**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+打开您 IDE 的 MCP 配置文件 (例如 `codebuddy_mcp_settings.json`)，在 `mcpServers` 对象中添加以下配置。**我们推荐使用 `@latest` 标签来确保您总能使用最新的稳定版本。**
 
 ```json
 {
   "mcpServers": {
     "video-convert": {
+      "timeout": 60,
+      "type": "stdio",
       "command": "npx",
-      "args": ["@pickstar-2002/video-convert-mcp"]
+      "args": [
+        "@pickstar-2002/video-convert-mcp@latest"
+      ]
     }
   }
 }
 ```
 
-### 3. 在其他 MCP 客户端中使用
+## ✨ 疑难解答 (Troubleshooting)
 
-任何支持MCP协议的客户端都可以连接到此服务器：
+**问：为什么我会遇到 `MCP error -32000: Connection closed` 错误？**
 
-```bash
-# 启动服务器
-npx @pickstar-2002/video-convert-mcp
-```
+答：这通常是 `npx` 的缓存问题导致的。如果您之前运行过旧版本的包，`npx` 可能会继续使用缓存中的旧版本。
 
-### 4. 编程方式集成
+**解决方案：**
 
-```typescript
-import VideoMcpServer from '@pickstar-2002/video-convert-mcp';
-
-const server = new VideoMcpServer();
-await server.start();
-```
-
-## 🔧 支持的格式
-
-| 格式 | 扩展名 | 描述 | 推荐用途 |
-|------|--------|------|----------|
-| MP4  | .mp4   | 最常用的视频格式 | 网络分享、移动设备 |
-| AVI  | .avi   | 经典的视频容器格式 | 桌面播放 |
-| MOV  | .mov   | Apple QuickTime格式 | Mac系统、专业编辑 |
-| WMV  | .wmv   | Windows Media Video | Windows系统 |
-| MKV  | .mkv   | 开源的多媒体容器 | 高质量存储 |
-| WEBM | .webm  | Web优化的视频格式 | 网页播放 |
-| M4V  | .m4v   | iTunes兼容格式 | Apple生态系统 |
+- **首选方案**：使用我们推荐的 `@latest` 标签，如上方的用法示例所示。
+- **备用方案 (最稳妥)**：如果您需要锁定在某个特定版本以保证长期稳定性，可以指定确切版本号，例如：
+    ```json
+    "args": [
+      "@pickstar-2002/video-convert-mcp@1.1.1" 
+    ]
+    ```
+- **终极方案**：手动清理 `npx` 缓存。在终端运行 `npm config get cache` 找到缓存目录，然后删除其中的 `_npx` 文件夹。
 
 ## 📖 API 文档
 
-### convert_video
-转换单个视频文件格式
+本 MCP 服务提供了以下工具：
 
-**参数:**
-```typescript
-{
-  inputPath: string;        // 输入视频文件路径
-  outputFormat: string;     // 目标输出格式 (mp4, avi, mov, wmv, mkv, webm, m4v)
-  outputPath?: string;      // 输出文件路径 (可选)
-  quality?: string;         // 质量预设: low/medium/high/ultra
-  resolution?: string;      // 分辨率，如 "1920x1080"
-  videoBitrate?: number;    // 视频码率 (kbps)
-  audioBitrate?: number;    // 音频码率 (kbps)
-  frameRate?: number;       // 帧率 (fps)
-  overwrite?: boolean;      // 是否覆盖已存在文件
-}
-```
+### `convert_video`
 
-**示例:**
-```json
-{
-  "tool": "convert_video",
-  "arguments": {
-    "inputPath": "/path/to/input.mp4",
-    "outputFormat": "avi",
-    "quality": "high",
-    "resolution": "1920x1080"
-  }
-}
-```
+转换单个视频文件。
 
-### get_video_info
-获取视频文件详细信息
+- **参数**:
+  - `inputPath` (string, 必填): 输入视频的完整路径。
+  - `outputFormat` (string, 必填): 目标输出格式 (如: 'mp4', 'mov')。
+  - `outputPath` (string, 可选): 输出文件的完整路径。若不指定，则在原文件同目录下生成。
+  - `quality` (string, 可选): 视频质量预设 (`low`, `medium`, `high`, `ultra`)。
+  - `overwrite` (boolean, 可选): 是否覆盖已存在的输出文件，默认为 `false`。
+  - ... (更多高级参数如 `resolution`, `videoBitrate` 等)
 
-**参数:**
-```typescript
-{
-  filePath: string;  // 视频文件路径
-}
-```
+### `batch_convert`
 
-**返回:**
-```typescript
-{
-  filePath: string;
-  format: string;
-  size: number;      // 文件大小 (字节)
-  duration: number;  // 时长 (秒)
-  video?: {
-    codec: string;
-    width: number;
-    height: number;
-    frameRate: number;
-    bitrate: number;
-  };
-  audio?: {
-    codec: string;
-    sampleRate: number;
-    channels: number;
-    bitrate: number;
-  };
-}
-```
+批量转换多个视频文件。
 
-### batch_convert
-批量转换视频文件
+- **参数**:
+  - `inputFiles` (string[], 必填): 输入视频文件路径的数组。
+  - `outputFormat` (string, 必填): 目标输出格式。
+  - `outputDir` (string, 必填): 输出目录的路径。
+  - `quality` (string, 可选): 视频质量预设。
+  - `overwrite` (boolean, 可选): 是否覆盖已存在的输出文件。
 
-**参数:**
-```typescript
-{
-  inputFiles: string[];     // 输入文件列表
-  outputFormat: string;     // 目标格式
-  outputDir: string;        // 输出目录
-  quality?: string;         // 质量预设
-  overwrite?: boolean;      // 是否覆盖已存在文件
-}
-```
+### `get_video_info`
 
-## 💡 使用示例
+获取视频文件的详细信息。
 
-### 基本转换
-将MP4文件转换为AVI格式：
-```json
-{
-  "tool": "convert_video",
-  "arguments": {
-    "inputPath": "/Users/username/video.mp4",
-    "outputFormat": "avi"
-  }
-}
-```
-
-### 高质量转换
-转换为高质量的MKV格式：
-```json
-{
-  "tool": "convert_video",
-  "arguments": {
-    "inputPath": "/Users/username/input.mp4",
-    "outputFormat": "mkv",
-    "quality": "high",
-    "resolution": "1920x1080",
-    "videoBitrate": 5000,
-    "audioBitrate": 192,
-    "frameRate": 30
-  }
-}
-```
-
-### 批量转换
-将多个视频文件批量转换为WEBM格式：
-```json
-{
-  "tool": "batch_convert",
-  "arguments": {
-    "inputFiles": [
-      "/path/to/video1.mp4",
-      "/path/to/video2.avi",
-      "/path/to/video3.mov"
-    ],
-    "outputFormat": "webm",
-    "outputDir": "/path/to/output",
-    "quality": "medium"
-  }
-}
-```
-
-### 获取视频信息
-```json
-{
-  "tool": "get_video_info",
-  "arguments": {
-    "filePath": "/path/to/video.mp4"
-  }
-}
-```
-
-## 🎯 质量预设说明
-
-| 预设 | 描述 | 适用场景 |
-|------|------|----------|
-| `low` | 低质量，文件小 | 快速预览、网络传输 |
-| `medium` | 中等质量 | 日常使用、社交分享 |
-| `high` | 高质量 | 专业用途、长期存储 |
-| `ultra` | 超高质量 | 专业制作、无损转换 |
-
-## 🔧 开发
-
-### 环境设置
-
-```bash
-# 克隆仓库
-git clone https://github.com/pickstar-2002/video-convert-mcp.git
-cd video-convert-mcp
-
-# 安装依赖
-npm install
-
-# 构建项目
-npm run build
-
-# 开发模式
-npm run dev
-```
-
-### 项目结构
-
-```
-src/
-├── types/          # TypeScript类型定义
-│   └── index.ts    # 核心类型接口
-├── services/       # 核心服务
-│   └── validator.js # 参数验证服务
-├── tools/          # MCP工具实现
-│   └── index.js    # 工具注册和处理器
-└── index.ts        # 服务器入口文件
-```
+- **参数**:
+  - `filePath` (string, 必填): 视频文件的完整路径。
 
 ## 🤝 贡献
 
-欢迎提交Issue和Pull Request！
+欢迎各种形式的贡献！如果您有任何想法或建议，请随时提交 Pull Request 或创建 Issue。
 
-1. Fork 项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开Pull Request
+1.  Fork 本仓库
+2.  创建您的特性分支 (`git checkout -b feature/AmazingFeature`)
+3.  提交您的更改 (`git commit -m 'Add some AmazingFeature'`)
+4.  推送到分支 (`git push origin feature/AmazingFeature`)
+5.  打开一个 Pull Request
 
 ## 📄 许可证
 
-本项目基于 [MIT](LICENSE) 许可证开源。
-
-## 🙏 致谢
-
-- [FFmpeg](https://ffmpeg.org/) - 强大的多媒体处理框架
-- [Model Context Protocol](https://modelcontextprotocol.io/) - 优秀的协议标准
-- [fluent-ffmpeg](https://github.com/fluent-ffmpeg/node-fluent-ffmpeg) - FFmpeg的Node.js封装
-
-## 📞 联系方式
-
-如有问题或建议，欢迎联系：
-
-**微信:** pickstar_loveXX
+本项目使用 [ISC](https://opensource.org/licenses/ISC) 许可证。
 
 ---
 
-<div align="center">
-  <p>如果这个项目对您有帮助，请给它一个 ⭐️</p>
-  <p>Made with ❤️ by pickstar-2002</p>
-</div>
+## 📧 联系我
+
+如果您有任何问题或合作意向，欢迎联系我。
+
+**微信**: pickstar_loveXX

@@ -47,14 +47,14 @@ export interface VideoInfo {
     width: number;
     height: number;
     frameRate: number;
-    bitrate: number;
+    bitrate: number | null;
   };
   /** 音频流信息 */
   audio?: {
     codec: string;
     sampleRate: number;
     channels: number;
-    bitrate: number;
+    bitrate: number | null;
   };
 }
 

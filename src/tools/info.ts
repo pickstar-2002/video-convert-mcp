@@ -54,13 +54,13 @@ export async function handleGetVideoInfo(args: GetVideoInfoArgs): Promise<any> {
         编解码器: videoInfo.video.codec,
         分辨率: `${videoInfo.video.width} x ${videoInfo.video.height}`,
         帧率: `${videoInfo.video.frameRate.toFixed(2)} fps`,
-        码率: videoInfo.video.bitrate > 0 ? `${Math.round(videoInfo.video.bitrate / 1000)} kbps` : '未知'
+        码率: (videoInfo.video.bitrate && videoInfo.video.bitrate > 0) ? `${Math.round(videoInfo.video.bitrate / 1000)} kbps` : '未知'
       } : null,
       音频流: videoInfo.audio ? {
         编解码器: videoInfo.audio.codec,
         采样率: `${videoInfo.audio.sampleRate} Hz`,
         声道数: videoInfo.audio.channels,
-        码率: videoInfo.audio.bitrate > 0 ? `${Math.round(videoInfo.audio.bitrate / 1000)} kbps` : '未知'
+        码率: (videoInfo.audio.bitrate && videoInfo.audio.bitrate > 0) ? `${Math.round(videoInfo.audio.bitrate / 1000)} kbps` : '未知'
       } : null
     };
 

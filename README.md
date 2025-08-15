@@ -7,6 +7,10 @@
 
 一款基于 MCP (Model Context Protocol) 协议的强大、高效的视频格式转换工具。支持在 AI 编程助手中直接进行视频格式转换，让视频处理变得前所未有的简单。
 
+<a href="https://glama.ai/mcp/servers/@pickstar-2002/video-convert-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@pickstar-2002/video-convert-mcp/badge" alt="Video Convert MCP server" />
+</a>
+
 ## ✨ 功能特性
 
 - **🚀 多格式转换**: 支持 MP4、AVI、MOV、WMV、MKV、WEBM、M4V 等主流视频格式之间的相互转换
